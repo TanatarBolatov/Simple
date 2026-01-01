@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'Starfire Demo';
+    src: url('./src/fonts/StarifeDemo.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Pulse Button Effect */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 var(--hover);
+    }
+}
+
+.pulse-button {
+    /* Variables will be set inline */
+    color: var(--color);
+    background: transparent;
+    border: 2px solid var(--color);
+    transition: all 0.25s;
+    cursor: pointer;
+    position: relative;
+    overflow: visible;
+}
+
+.pulse-button:hover,
+.pulse-button:focus,
+.pulse-button.active {
+    animation: pulse 1s;
+    box-shadow: 0 0 0 2em transparent;
+    border-color: var(--hover);
+    color: #fff;
+    background-color: var(--hover);
+}

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { CATEGORIES, PRODUCTS } from '../constants';
-import { useAppStore } from '../store/useAppStore';
-import { useCartStore } from '../store/useCartStore';
-import { IProduct } from '../types';
-import ProductModal from '../components/ProductModal';
+import { CATEGORIES, PRODUCTS } from '../../constants';
+import { useAppStore } from '../../store/useAppStore';
+import { useCartStore } from '../../store/useCartStore';
+import { IProduct } from '../../types';
+import ProductModal from '../../components/ProductModal';
 import BannerSlider from '../components/BannerSlider';
 
 const Menu: React.FC = () => {
@@ -20,10 +20,11 @@ const Menu: React.FC = () => {
     return (
         <div className="min-h-screen pb-24">
             {/* Top Bar */}
-            <div className="sticky top-0 z-20 bg-gray-50/80 backdrop-blur-md px-4 py-3 flex items-center justify-center shadow-sm">
-                <h1 className="font-display text-3xl tracking-tight">
-                    <span className="text-red-500 drop-shadow-sm">i'</span><span className="text-brand-green drop-shadow-sm">simple</span>
-                </h1>
+            <div className="sticky top-0 z-20 bg-gray-50/80 backdrop-blur-md px-4 py-4 flex items-center justify-between shadow-sm">
+                <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-yellow to-brand-green flex items-center justify-center text-white font-display font-bold">i</div>
+                    <span className="font-display text-xl text-gray-800">Menu</span>
+                </div>
             </div>
 
             {/* Banner Slider */}
@@ -39,8 +40,8 @@ const Menu: React.FC = () => {
                             key={cat.id}
                             onClick={() => setSelectedCategory(cat.id)}
                             className={`whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 shadow-sm ${selectedCategory === cat.id
-                                    ? 'bg-brand-green text-white scale-105 shadow-brand-green/30'
-                                    : 'bg-white text-gray-600 border border-gray-100'
+                                ? 'bg-brand-dark text-white scale-105'
+                                : 'bg-white text-gray-600 border border-gray-100'
                                 }`}
                         >
                             {cat.name}
@@ -68,7 +69,7 @@ const Menu: React.FC = () => {
                             <p className="text-[10px] text-gray-400 line-clamp-2 mb-2 flex-1">{product.description}</p>
                             <div className="flex items-center justify-between mt-auto">
                                 <span className="font-bold text-brand-dark">{product.price} ₸</span>
-                                <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-brand-green font-bold text-lg leading-none pb-0.5">+</div>
+                                <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-brand-dark font-bold text-lg leading-none pb-0.5">+</div>
                             </div>
                         </div>
                     </motion.div>
@@ -82,7 +83,7 @@ const Menu: React.FC = () => {
                         <motion.div
                             initial={{ y: 50, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            className="bg-brand-green text-white rounded-2xl p-4 shadow-xl shadow-brand-green/30 flex items-center justify-between"
+                            className="bg-brand-dark text-white rounded-2xl p-4 shadow-xl flex items-center justify-between"
                         >
                             <div className="flex items-center gap-3">
                                 <div className="bg-white/20 px-3 py-1 rounded-lg font-bold">{cartItemCount}</div>

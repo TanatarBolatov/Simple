@@ -47,12 +47,12 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) => {
           >
             {/* Image Header */}
             <div className="relative h-64 w-full shrink-0">
-              <img 
-                src={product.image} 
-                alt={product.name} 
+              <img
+                src={product.image}
+                alt={product.name}
                 className="w-full h-full object-cover"
               />
-              <button 
+              <button
                 onClick={onClose}
                 className="absolute top-4 right-4 bg-white/80 p-2 rounded-full shadow-lg"
               >
@@ -66,35 +66,25 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) => {
             <div className="p-6 overflow-y-auto pb-32">
               <h2 className="text-2xl font-display font-bold text-brand-dark mb-2">{product.name}</h2>
               <p className="text-gray-500 mb-6 leading-relaxed">{product.description}</p>
-              
-              <div className="border-t border-gray-100 py-4">
-                <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Добавить к блюду</p>
-                <div className="flex gap-2 flex-wrap">
-                  {/* Mock modifiers placeholder */}
-                  <div className="border border-dashed border-gray-300 rounded-lg p-3 text-sm text-gray-400 w-full text-center">
-                    Опции будут доступны скоро
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Sticky Action Footer */}
             <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 flex items-center gap-4">
               <div className="flex items-center bg-gray-100 rounded-xl px-2 py-1">
-                <button 
+                <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   className="w-10 h-10 flex items-center justify-center text-lg font-bold text-gray-600 active:scale-90 transition-transform"
                 >-</button>
                 <span className="w-8 text-center font-semibold">{quantity}</span>
-                <button 
+                <button
                   onClick={() => setQuantity(quantity + 1)}
                   className="w-10 h-10 flex items-center justify-center text-lg font-bold text-gray-600 active:scale-90 transition-transform"
                 >+</button>
               </div>
 
-              <button 
+              <button
                 onClick={handleAddToCart}
-                className="flex-1 bg-brand-dark text-white font-semibold h-12 rounded-xl flex items-center justify-between px-6 active:scale-95 transition-transform"
+                className="flex-1 bg-brand-green text-white font-semibold h-12 rounded-xl flex items-center justify-between px-6 active:scale-95 transition-transform shadow-lg shadow-brand-green/20"
               >
                 <span>В корзину</span>
                 <span>{product.price * quantity} ₸</span>
