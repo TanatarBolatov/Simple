@@ -1,13 +1,18 @@
+export type Language = 'ru' | 'kz';
+
 export interface IModifier {
   id: string;
   name: string;
+  name_kz?: string;
   price: number;
 }
 
 export interface IProduct {
   id: string;
   name: string;
+  name_kz?: string;
   description: string;
+  description_kz?: string;
   price: number;
   image: string;
   categoryId: number;
@@ -17,6 +22,7 @@ export interface IProduct {
 export interface ICategory {
   id: number;
   name: string;
+  name_kz?: string;
   slug: string;
 }
 
@@ -26,9 +32,10 @@ export interface ICartItem extends IProduct {
   tempId: string; // unique id for cart item (product + modifiers combination)
 }
 
-export type PaymentMethod = 'cash' | 'kaspi' | 'card';
+export type PaymentMethod = 'kaspi' | 'card';
 
 export interface IBranch {
   id: string;
   address: string;
+  address_kz?: string;
 }

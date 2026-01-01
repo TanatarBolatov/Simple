@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IProduct } from '../types';
 import { useCartStore } from '../store/useCartStore';
+import { useAppStore } from '../store/useAppStore';
+import { UI_TEXT } from '../constants';
 
 interface ProductModalProps {
   product: IProduct | null;
@@ -11,6 +13,8 @@ interface ProductModalProps {
 const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) => {
   const [quantity, setQuantity] = useState(1);
   const addToCart = useCartStore((state) => state.addToCart);
+  const language = useAppStore((state) => state.language);
+  const t = UI_TEXT[language];
 
   // Reset quantity when product changes
   React.useEffect(() => {
@@ -64,8 +68,12 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) => {
 
             {/* Content */}
             <div className="p-6 overflow-y-auto pb-32">
-              <h2 className="text-2xl font-display font-bold text-brand-dark mb-2">{product.name}</h2>
-              <p className="text-gray-500 mb-6 leading-relaxed">{product.description}</p>
+              <h2 className="text-2xl font-display font-bold text-brand-dark mb-2">
+                {language === 'kz' && product.name_kz ? product.name_kz : product.name}
+              </h2>
+              <p className="text-gray-500 mb-6 leading-relaxed">
+                {language === 'kz' && product.description_kz ? product.description_kz : product.description}
+              </p>
             </div>
 
             {/* Sticky Action Footer */}
@@ -86,7 +94,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) => {
                 onClick={handleAddToCart}
                 className="flex-1 bg-brand-green text-white font-semibold h-12 rounded-xl flex items-center justify-between px-6 active:scale-95 transition-transform shadow-lg shadow-brand-green/20"
               >
-                <span>В корзину</span>
+                <span>{t.addToCart}</span>
                 <span>{product.price * quantity} ₸</span>
               </button>
             </div>

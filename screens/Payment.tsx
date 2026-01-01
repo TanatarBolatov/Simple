@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '../store/useCartStore';
 import { useAppStore } from '../store/useAppStore';
 import { PaymentMethod } from '../types';
+import { UI_TEXT } from '../constants';
 
 const Payment: React.FC = () => {
     const navigate = useNavigate();
@@ -12,10 +13,12 @@ const Payment: React.FC = () => {
     const [isSuccess, setIsSuccess] = useState(false);
 
     const { clearCart, getTotalPrice } = useCartStore();
-    const tableId = useAppStore((state) => state.tableId);
+    const { tableId, language } = useAppStore();
     const total = getTotalPrice();
     // Service charge removed
     const finalTotal = total;
+
+    const t = UI_TEXT[language];
 
     const handleCheckout = () => {
         if (!method) return;
@@ -45,8 +48,8 @@ const Payment: React.FC = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>
                 </motion.div>
-                <h2 className="text-3xl font-display font-bold mb-2">Заказ принят!</h2>
-                <p className="opacity-90">Кухня уже начала готовить</p>
+                <h2 className="text-3xl font-display font-bold mb-2">{t.orderAccepted}</h2>
+                <p className="opacity-90">{t.kitchenCooking}</p>
             </div>
         );
     }
@@ -60,16 +63,16 @@ const Payment: React.FC = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                     </svg>
                 </button>
-                <h1 className="font-display text-xl font-bold">Оплата</h1>
+                <h1 className="font-display text-xl font-bold">{t.payment}</h1>
             </div>
 
             <div className="flex-1 p-4">
                 <div className="bg-white rounded-2xl p-6 shadow-sm mb-6 text-center">
-                    <p className="text-gray-500 mb-1">К оплате (Стол #{tableId || '??'})</p>
+                    <p className="text-gray-500 mb-1">{t.toPay} ({t.table} #{tableId || '??'})</p>
                     <div className="text-4xl font-bold text-gray-900">{finalTotal} ₸</div>
                 </div>
 
-                <h3 className="font-bold text-gray-800 mb-3 px-1">Выберите способ оплаты</h3>
+                <h3 className="font-bold text-gray-800 mb-3 px-1">{t.choosePayment}</h3>
                 <div className="space-y-4">
                     {/* Kaspi QR - Red */}
                     <button
@@ -93,23 +96,8 @@ const Payment: React.FC = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
                             </svg>
                         </div>
-                        <span className="font-semibold flex-1 text-left">Банковская карта</span>
+                        <span className="font-semibold flex-1 text-left">{t.card}</span>
                         {method === 'card' && <div className="w-4 h-4 rounded-full bg-white"></div>}
-                    </button>
-
-                    {/* Cash - Green */}
-                    <button
-                        onClick={() => setMethod('cash')}
-                        className={`w-full flex items-center p-4 rounded-xl pulse-button ${method === 'cash' ? 'active' : ''}`}
-                        style={{ '--color': '#22c55e', '--hover': '#22c55e' } as React.CSSProperties}
-                    >
-                        <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center text-white mr-4 shrink-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <span className="font-semibold flex-1 text-left">Наличные</span>
-                        {method === 'cash' && <div className="w-4 h-4 rounded-full bg-white"></div>}
                     </button>
                 </div>
             </div>
@@ -123,7 +111,7 @@ const Payment: React.FC = () => {
                     {isProcessing ? (
                         <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                     ) : (
-                        method ? `Оплатить ${finalTotal} ₸` : 'Выберите способ оплаты'
+                        method ? `${t.pay} ${finalTotal} ₸` : t.choosePayment
                     )}
                 </button>
             </div>

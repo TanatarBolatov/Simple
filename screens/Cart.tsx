@@ -3,13 +3,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCartStore } from '../store/useCartStore';
 import { useAppStore } from '../store/useAppStore';
+import { UI_TEXT } from '../constants';
 
 const Cart: React.FC = () => {
     const navigate = useNavigate();
     const { items, updateQuantity, removeFromCart, getTotalPrice } = useCartStore();
-    const tableId = useAppStore((state) => state.tableId);
+    const { tableId, language } = useAppStore();
 
     const total = getTotalPrice();
+    const t = UI_TEXT[language];
 
     return (
         <div className="min-h-screen bg-gray-50 pb-32">
@@ -20,15 +22,15 @@ const Cart: React.FC = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
                     </svg>
                 </button>
-                <h1 className="font-display text-xl font-bold">Корзина {tableId ? `(Стол ${tableId})` : ''}</h1>
+                <h1 className="font-display text-xl font-bold">{t.cart} {tableId ? `(${t.table} ${tableId})` : ''}</h1>
             </div>
 
             {items.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-[60vh] text-center px-8">
                     <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mb-6 text-4xl">🛒</div>
-                    <h2 className="text-xl font-bold text-gray-800 mb-2">Корзина пуста</h2>
-                    <p className="text-gray-500 mb-8">Добавьте вкусные блюда из меню, чтобы сделать заказ</p>
-                    <Link to="/" className="px-8 py-3 bg-brand-yellow text-brand-dark font-bold rounded-xl shadow-lg hover:bg-yellow-400 transition-colors">Перейти в меню</Link>
+                    <h2 className="text-xl font-bold text-gray-800 mb-2">{t.cartEmpty}</h2>
+                    <p className="text-gray-500 mb-8">{t.cartEmptyDesc}</p>
+                    <Link to="/" className="px-8 py-3 bg-brand-yellow text-brand-dark font-bold rounded-xl shadow-lg hover:bg-yellow-400 transition-colors">{t.goToMenu}</Link>
                 </div>
             ) : (
                 <div className="p-4 space-y-4">
@@ -46,7 +48,9 @@ const Cart: React.FC = () => {
                                 </div>
                                 <div className="flex-1 flex flex-col justify-between">
                                     <div>
-                                        <h3 className="font-display font-bold text-gray-800 text-lg">{item.name}</h3>
+                                        <h3 className="font-display font-bold text-gray-800 text-lg">
+                                            {language === 'kz' && item.name_kz ? item.name_kz : item.name}
+                                        </h3>
                                         <p className="text-brand-dark font-semibold">{item.price} ₸</p>
                                     </div>
                                     <div className="flex items-center justify-between mt-2">
@@ -62,7 +66,7 @@ const Cart: React.FC = () => {
                                             >+</button>
                                         </div>
                                         <button onClick={() => removeFromCart(item.tempId)} className="text-xs text-red-500 font-medium px-2">
-                                            Удалить
+                                            {t.delete}
                                         </button>
                                     </div>
                                 </div>
@@ -74,7 +78,7 @@ const Cart: React.FC = () => {
                     <div className="mt-8 bg-white rounded-2xl p-5 shadow-sm">
                         {/* Service charge hidden as per request */}
                         <div className="flex justify-between font-bold text-xl text-gray-800">
-                            <span>Итого</span>
+                            <span>{t.total}</span>
                             <span>{total} ₸</span>
                         </div>
                     </div>
@@ -84,7 +88,7 @@ const Cart: React.FC = () => {
             {items.length > 0 && (
                 <div className="fixed bottom-0 left-0 right-0 bg-white p-4 border-t border-gray-100 z-20">
                     <Link to="/payment" className="w-full bg-brand-green text-white font-bold h-14 rounded-xl flex items-center justify-center text-lg shadow-lg shadow-brand-green/20 active:scale-[0.98] transition-transform">
-                        Перейти к оплате
+                        {t.toPayment}
                     </Link>
                 </div>
             )}

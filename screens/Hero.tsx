@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { BRANCHES } from '../constants';
+import { BRANCHES, UI_TEXT } from '../constants';
 import { useAppStore } from '../store/useAppStore';
 
 const Hero: React.FC = () => {
-  const setHeroVisible = useAppStore((state) => state.setHeroVisible);
+  const { setHeroVisible, language } = useAppStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,6 +16,8 @@ const Hero: React.FC = () => {
 
     return () => clearTimeout(timer);
   }, [setHeroVisible, navigate]);
+
+  const t = UI_TEXT[language];
 
   return (
     <motion.div
@@ -47,7 +49,7 @@ const Hero: React.FC = () => {
         className="w-full max-w-sm"
       >
         <p className="text-center font-semibold text-white/90 mb-4 text-xs uppercase tracking-widest border-b border-white/20 pb-2">
-          Наши филиалы
+          {t.branches}
         </p>
         <div className="space-y-2">
           {BRANCHES.map((branch, index) => (
@@ -58,7 +60,7 @@ const Hero: React.FC = () => {
               transition={{ delay: 1.2 + index * 0.15 }}
               className="bg-white/10 backdrop-blur-md rounded-lg px-4 py-2 text-sm font-medium text-center shadow-sm border border-white/10"
             >
-              {branch.address}
+              {language === 'kz' && branch.address_kz ? branch.address_kz : branch.address}
             </motion.div>
           ))}
         </div>

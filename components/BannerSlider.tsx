@@ -1,37 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
-
-const BANNERS = [
-    {
-        id: 1,
-        badge: "Новинка",
-        title: "Сезонное меню",
-        subtitle: "Попробуйте наши летние новинки из свежих продуктов",
-        image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=80",
-        color: "from-brand-yellow to-brand-green",
-        textColor: "text-brand-dark"
-    },
-    {
-        id: 2,
-        badge: "Завтраки",
-        title: "Бодрое утро",
-        subtitle: "Кофе в подарок при заказе любого завтрака до 11:00",
-        image: "https://images.unsplash.com/photo-1493770348161-369560ae357d?auto=format&fit=crop&w=1200&q=80",
-        color: "from-orange-400 to-red-500",
-        textColor: "text-white"
-    },
-    {
-        id: 3,
-        badge: "Скидка 15%",
-        title: "Сладкий час",
-        subtitle: "Скидка на все десерты и выпечку после 20:00",
-        image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=1200&q=80",
-        color: "from-purple-600 to-indigo-600",
-        textColor: "text-white"
-    }
-];
+import { useAppStore } from '../store/useAppStore';
+import { UI_TEXT } from '../constants';
 
 const BannerSlider: React.FC = () => {
+    const { language } = useAppStore();
+    const t = UI_TEXT[language];
+
+    const BANNERS = [
+        {
+            id: 1,
+            badge: t.new,
+            title: t.seasonal,
+            subtitle: t.seasonalDesc,
+            image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1200&q=80",
+            color: "from-brand-yellow to-brand-green",
+            textColor: "text-brand-dark"
+        },
+        {
+            id: 2,
+            badge: t.breakfast,
+            title: t.morning,
+            subtitle: t.morningDesc,
+            image: "https://images.unsplash.com/photo-1493770348161-369560ae357d?auto=format&fit=crop&w=1200&q=80",
+            color: "from-orange-400 to-red-500",
+            textColor: "text-white"
+        },
+        {
+            id: 3,
+            badge: t.discount,
+            title: t.sweetHour,
+            subtitle: t.sweetHourDesc,
+            image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=1200&q=80",
+            color: "from-purple-600 to-indigo-600",
+            textColor: "text-white"
+        }
+    ];
+
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState(0);
 
